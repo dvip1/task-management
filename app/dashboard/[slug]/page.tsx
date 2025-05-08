@@ -27,7 +27,7 @@ export default function Page({
   return (
     <SidebarProvider>
       <>
-        <AppSidebar />
+        <AppSidebar roomId={id.slug} />
         <SidebarTrigger />
         <MainBody />
       </>

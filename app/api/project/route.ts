@@ -39,3 +39,31 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    await connectDB();
+    const { authorized, user, error } = await verifyAuth(req);
+    if (!authorized) {
+      console.log("user has logged in:" + user);
+      return NextResponse.json({ message: error }, { status: 401 });
+    }
+    const { searchParams } = new URL(req.url);
+    console.log(searchParams.get("roomId"));
+    const roomId = searchParams.get("roomId");
+    const projects = await ProjectModel.find({ roomId: roomId });
+    return NextResponse.json({ message: projects }, { status: 200 });
+  } catch (error: any) {
+    console.log(
+      process.env.NODE_ENV === "development"
+        ? error?.message
+        : "An error occured while creating rooms",
+    );
+    return new NextResponse(
+      JSON.stringify({ error: "Failed to create project" }),
+      {
+        status: 500,
+      },
+    );
+  }
+}
