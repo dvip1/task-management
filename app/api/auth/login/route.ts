@@ -11,7 +11,7 @@ interface UserPayload {
 }
 
 const TOKEN_EXPIRATION_SECONDS = 8 * 60 * 60; // 8 hours in seconds
-const COOKIE_NAME = "session_token"; // Choose a name for your cookie
+const COOKIE_NAME = process.env.TOKEN_SECRET; // Choose a name for your cookie
 
 export async function POST(req: Request) {
   try {

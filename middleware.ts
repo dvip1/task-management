@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const sessionToken = request.cookies.get("session_token");
+  const sessionToken = request.cookies.get(
+    process.env.TOKEN_SECRET || "session_token",
+  );
 
   // Protect routes that require authentication
   if (request.nextUrl.pathname.startsWith("/dashboard") && !sessionToken) {

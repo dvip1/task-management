@@ -4,6 +4,7 @@ import RoomModel from "@/models/roomModel";
 import { verifyAuth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
+// create
 export async function POST(req: NextRequest) {
   const { authorized, user, error } = await verifyAuth(req);
   if (!authorized) {
@@ -51,9 +52,12 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const { authorized, user, error } = await verifyAuth(req);
+
   if (!authorized) {
+    console.log("it is unauthoized");
     return NextResponse.json({ message: error }, { status: 401 });
   }
+  console.log("it is authoized");
   await connectDB();
   const email = user?.email;
 
@@ -79,6 +83,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// Join in room
 export async function PUT(req: NextRequest) {
   const { authorized, user, error } = await verifyAuth(req);
   if (!authorized) {
