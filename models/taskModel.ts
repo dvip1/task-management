@@ -16,6 +16,7 @@ const taskSchema = new mongoose.Schema({
     default: "todo",
   },
   createdAt: { type: Date, default: Date.now },
+  taskDue: Date,
   updatedAt: Date,
 });
 
